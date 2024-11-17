@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" th:href="@{/style/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm nav-red">
+		<div class="container-fluid">
+			<a class="navbar-brand ms-1" th:href="@{/main}"> <img th:src="@{/image/Logo.png}" alt="" width="70px"></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav ms-auto w-100">
+					<li class="nav-item ms-auto me-3">
+						<a class="nav-link" th:href="@{/catalog}">Catalog</a>
+					</li>
+					<li class="nav-item me-3">
+						<a class="nav-link" th:href="@{/profile/computers}">My Computers</a>
+					</li>
+					<li class="nav-item me-3" id="registration-button" th:if="${user} == null">
+						<a class="nav-link" href="./registration.html">Sign Up</a>
+					</li>
+
+					<li class="nav-item me-3" id="login-button" th:if="${user} == null">
+						<a class="nav-link" href="./login.html">Sign In</a>
+					</li>
+
+					<li class="nav-item me-3" th:if="${user} != null">
+						<a class="nav-link" th:href="@{/cart}">
+							<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+						</a>
+					</li>
+
+					<li class="nav-item me-3" th:if="${user} != null">
+						<a class="nav-link" th:href="@{/profile}" th:text="${user}">usrnm</a>
+						
+					</li>
+
+                    <li class="nav-item me-3" sec:authorize="hasRole('ROLE_ADMIN')">
+						<a class="nav-link" th:href="@{/profile}">Admin Panel</a>
+						
+					</li>
+
+					<li class="nav-item me-3" th:if="${user} != null">
+						<a class="nav-link" th:href="@{/logout}">Log Out</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+    <div class="splide splide1" role="group" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide">
+                    <div class="row w-100">
+
+                        <div class="col-6 image-box text-center">
+                            <img th:src="@{/image/Asus-Logo.png}" width="75%" class="mx-auto" alt="">
+                        </div>
+
+                        <div class="col-6 p-3">
+                            <div class="w-75 mx-auto p-3 text-light blue-block">
+                                <h1>ASUS</h1>
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo exercitationem non et
+                                    enim assumenda aliquid eveniet consectetur mollitia optio omnis beatae, error odio
+                                    aperiam inventore quas ab ipsa voluptatum ex qui. Eaque deserunt quasi ipsam,
+                                    dolorem porro possimus illo repudiandae molestias numquam explicabo dicta itaque
+                                    quae id, voluptates, provident sunt!</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                <li class="splide__slide">
+                    <div class="row">
+
+                        <div class="col-6 image-box text-center">
+                            <img th:src="@{/image/Acer-Logo_2011.png}" width="75%" class="mx-auto" alt="">
+                        </div>
+                        <div class="col-6 p-3">
+                            <div class="w-75 mx-auto p-3 text-light blue-block">
+                                <h1>Acer</h1>
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo exercitationem non et
+                                    enim assumenda aliquid eveniet consectetur mollitia optio omnis beatae, error odio
+                                    aperiam inventore quas ab ipsa voluptatum ex qui. Eaque deserunt quasi ipsam,
+                                    dolorem porro possimus illo repudiandae molestias numquam explicabo dicta itaque
+                                    quae id, voluptates, provident sunt!</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="splide__slide">
+                    <div class="row">
+                        <div class="col-6 image-box text-center">
+                            <img th:src="@{/image/2560px-MacBook.svg.png}" width="75%" class="mx-auto" alt="">
+                        </div>
+                        <div class="col-6 p-3">
+                            <div class="w-75 mx-auto p-3 text-light blue-block">
+                                <h1>Mac</h1>
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo exercitationem non et
+                                    enim assumenda aliquid eveniet consectetur mollitia optio omnis beatae, error odio
+                                    aperiam inventore quas ab ipsa voluptatum ex qui. Eaque deserunt quasi ipsam,
+                                    dolorem porro possimus illo repudiandae molestias numquam explicabo dicta itaque
+                                    quae id, voluptates, provident sunt!</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="mt-5">Popular Products</h2>
+        <div class="splide splide2 w-100 mt-2" role="group" aria-label="Splide Basic HTML Example">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top my-auto w-100"
+                                    src="https://img.5element.by/import/images/ut/goods/good_a859be33-a3cc-11ed-bb92-005056012465/-1_600.jpg"
+                                    alt="Card image">
+                            </div>
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp1</h4>
+                                <p class="card-text m-0">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top my-auto w-100"
+                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrXFhNJJGrDf6jk1w_bWbn_k4V9ej66nzNXA16-k3fvQ&s"
+                                    alt="Card image">
+                            </div>
+
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp2</h4>
+                                <p class="card-text m-0">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top image-box"
+                                    src="https://7745.by/img/imagecache/card_medium_image_for_product/uploads/products/793352/01.jpg"
+                                    alt="Card image">
+                            </div>
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp3</h4>
+                                <p class="card-text m-0">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top w-100"
+                                    src="https://m.media-amazon.com/images/I/71VvU7jdCUL._AC_UF1000,1000_QL80_.jpg"
+                                    alt="Card image">
+                            </div>
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp4</h4>
+                                <p class="card-text m-0">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top w-100"
+                                    src="https://login.kg/image/cache/catalog/new/Notebook/Xiaomi/Redmi%20G/1-500x400.jpg"
+                                    alt="Card image">
+                            </div>
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp5</h4>
+                                <p class="card-text m-0">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top w-100"
+                                    src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2023/04/razer-blade-18-gaming-laptop.jpg"
+                                    alt="Card image">
+                            </div>
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp6</h4>
+                                <p class="card-text m-0">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="mt-5">Recent Products</h2>
+        <div class="splide splide3 w-100 mt-2" role="group" aria-label="Splide Basic HTML Example">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top my-auto w-100"
+                                    src="https://img.5element.by/import/images/ut/goods/good_a859be33-a3cc-11ed-bb92-005056012465/-1_600.jpg"
+                                    alt="Card image">
+                            </div>
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp7</h4>
+                                <p class="card-text">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top my-auto w-100"
+                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrXFhNJJGrDf6jk1w_bWbn_k4V9ej66nzNXA16-k3fvQ&s"
+                                    alt="Card image">
+                            </div>
+
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp8</h4>
+                                <p class="card-text">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top image-box"
+                                    src="https://7745.by/img/imagecache/card_medium_image_for_product/uploads/products/793352/01.jpg"
+                                    alt="Card image">
+                            </div>
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp9</h4>
+                                <p class="card-text">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top w-100"
+                                    src="https://m.media-amazon.com/images/I/71VvU7jdCUL._AC_UF1000,1000_QL80_.jpg"
+                                    alt="Card image">
+                            </div>
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp10</h4>
+                                <p class="card-text">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top w-100"
+                                    src="https://login.kg/image/cache/catalog/new/Notebook/Xiaomi/Redmi%20G/1-500x400.jpg"
+                                    alt="Card image">
+                            </div>
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp11</h4>
+                                <p class="card-text">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <div class="card">
+                            <div class="h-50">
+                                <img class="card-img-top w-100"
+                                    src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2023/04/razer-blade-18-gaming-laptop.jpg"
+                                    alt="Card image">
+                            </div>
+                            <div class="card-body h-50">
+                                <h4 class="card-title">Comp12</h4>
+                                <p class="card-text">OS: Windus</p>
+                                <button class="btn btn-danger mt-2">More Info</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- <button class="btn btn-success" onclick="addActiveUser()">Click Me!</button> -->
+
+    <footer class="site-footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <h6>About</h6>
+                    <p class="text-justify">Scanfcode.com <i>CODE WANTS TO BE SIMPLE </i> is an initiative to help the
+                        upcoming programmers with the code. Scanfcode focuses on providing the most efficient code or
+                        snippets as the code wants to be simple. We will help programmers build up concepts in different
+                        programming languages that include C, C++, Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android,
+                        SQL and Algorithm.</p>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>Categories</h6>
+                    <ul class="footer-links">
+                        <li><a href="http://scanfcode.com/category/c-language/">C</a></li>
+                        <li><a href="http://scanfcode.com/category/front-end-development/">UI Design</a></li>
+                        <li><a href="http://scanfcode.com/category/back-end-development/">PHP</a></li>
+                        <li><a href="http://scanfcode.com/category/java-programming-language/">Java</a></li>
+                        <li><a href="http://scanfcode.com/category/android/">Android</a></li>
+                        <li><a href="http://scanfcode.com/category/templates/">Templates</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="http://scanfcode.com/about/">About Us</a></li>
+                        <li><a href="http://scanfcode.com/contact/">Contact Us</a></li>
+                        <li><a href="http://scanfcode.com/contribute-at-scanfcode/">Contribute</a></li>
+                        <li><a href="http://scanfcode.com/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="http://scanfcode.com/sitemap/">Sitemap</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <p class="copyright-text">Copyright &copy; 2017 All Rights Reserved by
+                        <a href="#">Scanfcode</a>.
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script th:src="@{/js/main-page.js}"></script>
+</body>
+
+</html>

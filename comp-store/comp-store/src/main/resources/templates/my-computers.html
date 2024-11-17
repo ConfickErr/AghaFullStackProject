@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/style/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm nav-red">
+        <div class="container-fluid">
+            <a class="navbar-brand ms-1" th:href="@{/main}">
+                <img th:src="@{/image/Logo.png}" alt="" width="70px">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav ms-auto w-100">
+                    <li class="nav-item ms-auto me-3">
+                        <button class="nav-link" data-bs-toggle="modal" data-bs-target="#myModal">Add Computer</button>
+                    </li>
+                    <li class="nav-item dropdown" id="username-button">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <span id="username">Username</span>
+                            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item text-dark" href="#">Profile</a></li>
+                            <li><button class="dropdown-item text-dark" onclick="logout()">Log Out</button></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" style="margin-bottom: 500px;">
+        <div class="row mt-2">
+            <div class="col">
+                <select name="" id="" class="form-select w-25">
+                    <option value="">5</option>
+                    <option value="">10</option>
+                    <option value="">20</option>
+                    <option value="">50</option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="search" class="form-control ms-auto w-25">
+            </div>
+        </div>
+        <table class="table text-center mt-2">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Photo</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            
+			<tr th:each="computer:${computers}">
+                <td th:text="${computer.id}">ID</td>
+                <td th:text="${computer.producer.name} + ' ' + ${computer.name}">Name</td>
+                <td class="p-0">
+                	<img alt="img" width="100px" th:src="${computer.imgURL}">
+                </td>
+                <td th:text="${computer.price}">Price</td>
+                <td>
+               	  <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal" th:onclick="'getComputerById(' + ${computer.id} + ')'"><i class="fa fa-pencil" aria-hidden="true"></i></button> 
+                  <a th:href="@{/profile/computer/remove/{id} (id = ${computer.id})}" th:onclick="if(!confirm('Are you sure you want to delete this computer?')) return false" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a> 
+                </td>
+            </tr>
+            <tr id="empty-table-row" th:if="${computersCount == 0}">
+                <td colspan="5">No data available in table</td>
+            </tr>
+            <tbody id="table-data"></tbody>
+        </table>
+        <p>Showing 0 to 0 of 0 entries</p>
+    </div>
+
+    <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Computer</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <ul class="nav nav-pills nav-danger">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="pill" href="#home">Main</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="pill" href="#menu1">Parameters</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="pill" href="#menu2">Image</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="row">
+                            <div class="col-lg-8 col-12">
+                                <div class="tab-content" style="height: 450px;">
+                                    <!-- <form action=""> -->
+                                    <div class="tab-pane container active pt-2" id="home">
+                                        <h3>Main</h3>
+                                        <input type="hidden" id="computer-id">
+                                        <input type="hidden" id="computer-user" th:value="${user}">
+                                        
+                                        <label class="form-label m-0 mt-2" for="computer-name">Name:</label>
+                                        <input type="text" name="computer-name" id="computer-name" class="form-control"
+                                            placeholder="Aspire..." onkeyup="fillNameCard()">
+
+                                        <label class="form-label m-0 mt-2" for="computer-producer">Producer:</label>
+                                        <select class="form-select" id="computer-producer" name="computer-producer"
+                                            onchange="fillProducerCard()">
+                                            <option th:each="prod:${producers}" th:value="${prod.id}" th:text="${prod.name}"></option>
+                                            
+                                        </select>
+
+                                        <label class="form-label m-0 mt-2" for="computer-new">State:</label>
+                                        <select class="form-select" id="computer-new" name="computer-new"
+                                            onchange="fillNewCard()">
+                                            <option value="Old">Old</option>
+                                            <option value="New">New</option>
+                                        </select>
+
+                                        <label class="form-label m-0 mt-2" for="computer-price">Price:</label>
+                                        <input type="number" name="computer-price" id="computer-price"
+                                            class="form-control" placeholder="1000" min="1" max="1000000"
+                                            onkeyup="fillPriceCard()">
+
+                                        <label class="form-label m-0 mt-2"
+                                            for="computer-description">Description:</label>
+                                        <textarea class="form-control" rows="3" id="computer-description"
+                                            name="computer-description"></textarea>
+                                    </div>
+
+                                    <div class="tab-pane container fade pt-2" id="menu1">
+                                        <h3>Parametres</h3>
+
+                                        <label class="form-label m-0 mt-2" for="computer-ram">RAM:</label>
+                                        <input type="text" name="computer-ram" id="computer-ram" class="form-control"
+                                            placeholder="8GB..." onkeyup="fillRamCard()">
+                                            
+                                        <label class="form-label m-0 mt-2" for="computer-cpu">CPU:</label>
+										<select class="form-select" id="computer-cpu" name="computer-cpu"
+                                            onchange="fillProducerCard()">
+                                            <option th:each="cp:${cpus}" th:value="${cp.id}" th:text="${cp.name}"></option>
+                                        </select>
+
+                                        <label class="form-label m-0 mt-2" for="computer-rom">ROM:</label>
+                                        <input type="text" name="computer-rom" id="computer-rom" class="form-control"
+                                            placeholder="128GB" onkeyup="fillRomCard()">
+
+                                        <label class="form-label m-0 mt-2" for="computer-rom-type">ROM Type:</label>
+                                        <select class="form-select" id="computer-rom-type" name="computer-rom-type"
+                                            onchange="fillRomTypeCard()">
+                                            <option value="HDD">HDD</option>
+                                            <option value="SSD">SSD</option>
+                                        </select>
+
+                                        <label class="form-label m-0 mt-2" for="computer-os">OS:</label>
+                                        <select class="form-select" id="computer-os" name="computer-os"
+                                            onclick="fillOSCard()">
+                                            <option th:each="o:${oses}" th:value="${o.id}" th:text="${o.name}"></option>
+                                        </select>
+
+                                        <label class="form-label m-0 mt-2" for="computer-gpu">GPU:</label>
+                                        <select class="form-select" id="computer-gpu" name="computer-gpu"
+                                            onclick="fillOSCard()">
+                                            <option th:each="gp:${gpus}" th:value="${gp.id}" th:text="${gp.name} + ' ' + ${gp.prototype}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="tab-pane container fade pt-2" id="menu2">
+                                            <h3>Image</h3>
+                                            <label class="form-label m-0 mt-2" for="computer-img">Image URL:</label>
+                                            <input type="text" name="computer-img" id="computer-img"
+                                                onkeyup="fillImageLinkCard()" class="form-control"
+                                                placeholder="http://...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-0">
+                                <div class="card" style="height: 500px !important;">
+                                    <div class="h-50 text-center">
+                                        <img src="" id="card-image" alt="Computer image" height="100%">
+                                    </div>
+                                    <div class="card-body h-50">
+                                        <h4 class="card-title"><span id="card-name">Name</span>,
+                                            <span id="card-producer">Producer</span>
+                                            <span class="badge rounded-pill bg-success" id="new-badge">New</span>
+                                            <span class="badge rounded-pill bg-danger" id="old-badge">Old</span>
+                                        </h4>
+                                        <table class="borderless-table w-100">
+                                            <tr>
+                                                <th>CPU:</th>
+                                                <td id="card-cpu" class="text-end"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>RAM:</th>
+                                                <td id="card-ram" class="text-end"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>ROM:</th>
+                                                <td class="text-end"><span id="card-rom"></span><span
+                                                        id="card-rom-type"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <th>GPU:</th>
+                                                <td id="card-gpu" class="text-end"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>OS:</th>
+                                                <td id="card-os" class="text-end"></td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2">Price: <span id="card-price"></span></th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button class="btn btn-success" onclick="submitForm()">Add Computer</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+
+    <footer class="site-footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <h6>About</h6>
+                    <p class="text-justify">Scanfcode.com <i>CODE WANTS TO BE SIMPLE </i> is an initiative to help the
+                        upcoming programmers with the code. Scanfcode focuses on providing the most efficient code or
+                        snippets as the code wants to be simple. We will help programmers build up concepts in different
+                        programming languages that include C, C++, Java, HTML, CSS, Bootstrap, JavaScript, PHP, Android,
+                        SQL and Algorithm.</p>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>Categories</h6>
+                    <ul class="footer-links">
+                        <li><a href="http://scanfcode.com/category/c-language/">C</a></li>
+                        <li><a href="http://scanfcode.com/category/front-end-development/">UI Design</a></li>
+                        <li><a href="http://scanfcode.com/category/back-end-development/">PHP</a></li>
+                        <li><a href="http://scanfcode.com/category/java-programming-language/">Java</a></li>
+                        <li><a href="http://scanfcode.com/category/android/">Android</a></li>
+                        <li><a href="http://scanfcode.com/category/templates/">Templates</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="http://scanfcode.com/about/">About Us</a></li>
+                        <li><a href="http://scanfcode.com/contact/">Contact Us</a></li>
+                        <li><a href="http://scanfcode.com/contribute-at-scanfcode/">Contribute</a></li>
+                        <li><a href="http://scanfcode.com/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="http://scanfcode.com/sitemap/">Sitemap</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <p class="copyright-text">Copyright &copy; 2017 All Rights Reserved by
+                        <a href="#">Scanfcode</a>.
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+	<script type="text/javascript" th:inline="javascript">
+    	const computers = [[${computers}]];
+    	
+    	function getComputerById(id){ 
+    		console.log(id);
+            computers.forEach(comp => {
+                if (comp.id == id) {
+                    alert(JSON.stringify(comp));
+                    fillModal(comp);
+                }
+            });
+    	}
+    	
+    	function fillModal(comp) {
+    		document.getElementById('computer-id').value = comp.id;
+    		document.getElementById('computer-name').value = comp.name;
+    		document.getElementById('computer-ram').value = comp.ram;
+    		document.getElementById('computer-price').value = comp.price;
+    		document.getElementById('computer-rom').value = comp.rom;
+    		document.getElementById('computer-img').value = comp.imgURL;
+    		document.getElementById('computer-description').value = comp.description;
+    		document.getElementById('computer-producer').value = comp.producer.id;
+    		document.getElementById('computer-new').value = comp.state.id;
+    		document.getElementById('computer-cpu').value = comp.cpu.id;
+    		document.getElementById('computer-rom-type').value = comp.romType.id;
+    		document.getElementById('computer-os').value = comp.os.id;
+    		document.getElementById('computer-gpu').value = comp.gpu.id;
+    		
+    	}
+    	
+    </script>
+    <script th:src="@{/js/addcomp.js}"></script>
+    
+
+
+</body>
+
+</html>
